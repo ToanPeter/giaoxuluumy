@@ -1,40 +1,2108 @@
+<!DOCTYPE html>
+<html lang="vi">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Lê Văn Toàn Photography</title>
-
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<title>NOTEJOB PRO 2.0</title>
 
 <style>
-/* HERO SECTION */
-.hero {
-    height: 100vh;
-    background: linear-gradient(rgba(0,0,0,0.75), rgba(0,0,0,0.75)),
-    url('https://images.unsplash.com/photo-1516035069371-29a1b244cc32');
-    background-size: cover;
-    background-position: center;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+*{
+    box-sizing: border-box;
+}
+body{
+    margin:0;
+    font-family:Arial;
+    color:white;
+    padding-bottom:90px;
+
+    overflow-x:hidden;   /* THÊM DÒNG NÀY */
+
+    background:linear-gradient(-45deg,#000000,#0f2027,#000000,#203a43);
+    background-size:400% 400%;
+    animation:bgMove 15s ease infinite;
+}
+html,body{
+    max-width:100%;
+    overflow-x:hidden;
+}
+.action-buttons button{
+    transition:0.2s;
+}
+#calendar{
+    width:100%;
+}
+.action-buttons button:hover{
+    transform:scale(1.05);
+    box-shadow:0 0 8px rgba(255,255,255,0.3);
+}
+#topAvatar{
+    margin-top:-3px;
+}
+
+.notification-icon{
+    margin-top:-3px;
+}
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 20px;
+    position:relative;
+
+    backdrop-filter:blur(10px);
+    background:rgba(0,0,0,0.4);
+    border-bottom:1px solid rgba(255,255,255,0.1);
+}
+.header h1{
+    color:gold;
+    margin-bottom:5px;   /* thêm dòng này */
+}
+
+.header p{
+    margin-top:0;        /* thêm dòng này */
+}
+
+.month-control{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:0 20px 5px;   /* giảm 10px xuống 5px */
+    margin-top:0;
+    font-weight:bold;
+}
+
+.detail-modal{
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    background: #1e1e1e;
+    padding: 20px;
+    border-radius: 10px;
+    width: 300px;
+    display: none;
+    box-shadow: 0 0 20px rgba(0,0,0,0.5);
+}
+
+.job-detail h2{
+    margin-bottom: 10px;
+}
+
+.job-detail p{
+    margin: 5px 0;
+}
+
+.job-detail button{
+    margin-top: 10px;
+    width: 100%;
+}
+
+.month-btn{
+    background:#222;
+    padding:6px 12px;
+    border-radius:8px;
+    cursor:pointer;
+    transition:.2s;
+}
+.month-btn:hover{transform:scale(1.1)}
+
+.calendar{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+    padding:8px;
+    padding-bottom:110px;   /* đổi margin-bottom thành padding-bottom */
+}
+
+.special-day{
+    font-size:9px;
+    color:gold;
+    margin-top:2px;
+    line-height:1.1;
+}
+
+/* Ô thứ */
+.weekday{
+    text-align:center;
+    font-weight:bold;
+    padding:10px 0;
+    background:#181818;
+    border-radius:6px;
+}
+
+.weekend-title{
+    color:red;
+}
+
+/* Ô ngày */
+.day{
+    background:#181818;
+    height:67px;
+    border-radius:6px;
+    cursor:pointer;
+    transition:.2s;
+    position:relative;
+    padding:6px;
+    font-size:16px;
+
+    display:flex;
+    flex-direction:column;
+    justify-content:flex-start;
+
+    overflow:hidden;   /* QUAN TRỌNG */
+}
+.stats-header{
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    gap:25px;
+    margin:20px 0;
+}
+
+#statsMonthTitle{
+    font-weight:600;
+    letter-spacing:1px;
+    color:#f7c600;
+}
+
+.arrow-btn{
+    width:45px;
+    height:45px;
+    border-radius:50%;
+    border:1px solid #f7c600;
+    background:linear-gradient(145deg,#111,#1c1c1c);
+    color:#f7c600;
+    font-size:18px;
+    cursor:pointer;
+    transition:0.3s;
+    box-shadow:0 0 10px rgba(247,198,0,0.2);
+}
+
+.arrow-btn:hover{
+    background:#f7c600;
+    color:#000;
+    box-shadow:0 0 20px rgba(247,198,0,0.6);
+    transform:scale(1.15);
+}
+
+.arrow-btn:active{
+    transform:scale(0.95);
+}
+
+
+.day:hover{
+    transform:scale(1.05);
+    background:linear-gradient(145deg,#1a1a1a,#2c2c2c);
+    box-shadow:0 0 10px rgba(0,255,255,0.5);
+}
+h1{
+    color:#ffcc00;
+    text-shadow:
+        0 0 5px #ffcc00,
+        0 0 10px #ff9900,
+        0 0 20px #ff6600;
+}
+
+@keyframes glow{
+    from{
+        text-shadow: 0 0 5px #ffcc00;
+    }
+    to{
+        text-shadow: 0 0 20px #ff6600;
+    }
+}
+
+.day-number{
+    font-weight:bold;
+    font-size:15px;
+}
+
+.lunar{
+    font-size:11px;
+    color:#bbb;
+    margin-top:2px;
+}
+
+.note-preview{
+    font-size:10px;
+    margin-top:2px;
+    color:gold;
+}
+
+.day-number{
+    font-weight:bold;
+}
+
+.note-preview{
+    font-size:10px;
+    margin-top:2px;
+    opacity:.8;
+}
+
+.day:hover{transform:scale(1.05)}
+
+.weekend{
+    color:red;
+}
+
+.day.hasJob{
+    border:2px solid gold;
+    box-shadow:0 0 8px gold;
+}
+
+
+/* ===== SEARCH ITEM ===== */
+.search-item{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:12px 15px;
+    margin-bottom:8px;
+    background:linear-gradient(135deg,#1a1a1a,#2a2a2a);
+    border-radius:10px;
+    cursor:pointer;
+    transition:0.3s;
+}
+
+.search-item:hover{
+    background:linear-gradient(135deg,#252525,#353535);
+    transform:scale(1.02);
+}
+
+/* Text bên trái */
+.search-text{
+    color:#fff;
+    font-weight:500;
+}
+
+/* Nút XEM */
+.view-btn{
+    background:#ffd700;
+    color:#000;
+    padding:5px 14px;
+    border-radius:20px;
+    font-size:13px;
+    font-weight:bold;
+}
+
+.job-count{
+    position:absolute;
+    bottom:4px;
+    right:6px;
+    font-size:11px;
+    color:gold;
+}
+
+
+.job-preview{
+    font-size:9px;
+    color:#00ffd5;
+    background:rgba(0,255,200,0.08);
+    padding:1px 3px;
+    border-radius:3px;
+    margin-top:2px;
+
+    white-space:nowrap;
+    overflow:hidden;
+    text-overflow:ellipsis;
+}
+
+/* NAV */
+
+
+
+.action-buttons{
+    display:flex;
+    gap:10px;          /* khoảng cách giữa nút */
+    margin-top:10px;
+}
+
+.action-buttons button{
+    flex:1;            /* chia đều 3 nút */
+    border:none;
+    padding:10px;
+    border-radius:8px;
+    font-weight:bold;
+    cursor:pointer;
+}
+/* Fix input time full width & đồng bộ */
+input[type="time"]{
+    width:100%;
+    padding:18px;
+    background:#2a2a2a;
+    border:none;
+    border-radius:12px;
+    color:white;
+    font-size:18px;
+    box-sizing:border-box;
+}
+
+/* Fix icon đồng hồ bị lệch trên mobile */
+input[type="time"]::-webkit-calendar-picker-indicator{
+    filter: invert(1);
+}
+.bottom-nav{
+    position:fixed;
+    bottom:0;
+    width:100%;
+    background:#111;
+    display:flex;
+    justify-content:space-around; /* CĂN ĐỀU */
+    align-items:center;
+    padding:6px 0;
+    height:60px; /* thấp lại cho gọn */
+}
+
+/* icon */
+.nav-icon{
+    font-size:17px;
+    margin-bottom:2px;
+}
+
+/* nút */
+.nav-btn{
+    flex:1;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+
+    cursor:pointer;
+    color:#aaa;
+
+    padding:4px 4px;
+    border-radius:12px;
+
+    transition:.25s;
+    font-size:11px;
+}
+.nav-text{
+    font-size:11px;
+    margin-top:2px;
+    font-weight:500;
+}
+/* khi active */
+.nav-btn.active{
+    color:gold;
+    border:2px solid gold;
+    border-radius:12px;
+    padding:4px 8px;
+
+    box-shadow:0 0 8px gold, 0 0 15px rgba(255,215,0,0.6);
+}
+.nav-btn.active .nav-icon{
+    filter:drop-shadow(0 0 5px gold);
+}
+/* POPUP */
+.overlay{
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.6);
+    display:none;
+}
+.overlay.active{display:block}
+
+.popup{
+    position:fixed;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%) scale(0.7);
+    background:#111;
+    padding:25px;
+    border-radius:15px;
+    width:320px;
+    max-height:85vh;              /* 👈 thêm */
+    overflow-y:auto;              /* 👈 thêm */
+    -webkit-overflow-scrolling:touch; /* 👈 mobile mượt */
+    text-align:center;
+    color:white;
+    box-shadow:0 0 25px rgba(0,255,255,0.4);
+    opacity:0;
+    pointer-events:none;
+    transition:0.3s;
+}
+.popup.show{
+    transform:translate(-50%,-50%) scale(1);
+    opacity:1;
+    pointer-events:auto;
+}
+
+.popup.active{bottom:0}
+.popup::-webkit-scrollbar{
+    display:none;
+}
+.today{
+    border:2px solid #00ffcc;
+    box-shadow:0 0 15px #00ffcc;
+    background:linear-gradient(145deg,#0f2027,#203a43);
+}
+
+input{
+    width:100%;
+    padding:10px;
+    margin:6px 0;
+    border:none;
+    border-radius:8px;
+    background:#2b2b2b;
+    color:white;
+}
+
+#bellIcon{
+    position:absolute;
+    top:20px;
+    right:25px;
+    font-size:24px;
+    cursor:pointer;
+    color:#fff;
+}
+
+#notifyBadge{
+    position:absolute;
+    top:-6px;
+    right:-10px;
+    background:red;
+    color:#fff;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:50%;
+    display:none;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:8px;
+    border:none;
+    border-radius:10px;
+    background:gold;
+    font-weight:bold;
+    cursor:pointer;
+}
+button:active{transform:scale(.9)}
+#bellIcon{
+    position:absolute;
+    top:20px;
+    right:25px;
+    font-size:26px;
+    cursor:pointer;
+    color:#fff;
+    transition:0.3s;
+}
+
+/* RUNG */
+.bell-shake{
+    animation: shake 0.6s infinite;
+}
+
+@keyframes shake{
+    0%{ transform: rotate(0deg); }
+    25%{ transform: rotate(-15deg); }
+    50%{ transform: rotate(15deg); }
+    75%{ transform: rotate(-10deg); }
+    100%{ transform: rotate(0deg); }
+}
+
+/* VIỀN VÀNG PHÁT SÁNG */
+.ring-effect{
+    position:absolute;
+    top:50%;
+    left:50%;
+    width:40px;
+    height:40px;
+    border:2px solid gold;
+    border-radius:50%;
+    transform:translate(-50%,-50%);
+    opacity:0;
+    pointer-events:none;
+}
+
+.bell-active .ring-effect{
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse{
+    0%{
+        width:40px;
+        height:40px;
+        opacity:0.8;
+    }
+    100%{
+        width:70px;
+        height:70px;
+        opacity:0;
+    }
+}
+
+/* Badge */
+#notifyBadge{
+    position:absolute;
+    top:-6px;
+    right:-10px;
+    background:red;
+    color:#fff;
+    font-size:12px;
+    padding:2px 6px;
+    border-radius:50%;
+    display:none;
+}
+body{
+    margin:0;
+    font-family:Arial;
+    color:white;
+    padding-bottom:90px;
+
+    background:linear-gradient(-45deg,#000000,#0f2027,#000000,#203a43);
+    background-size:400% 400%;
+    animation:bgMove 15s ease infinite;
+}
+@keyframes bgMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+.close-btn{
+    background:#444;
+    color:white;
+}
+#accountPopup p{
+    margin:10px 0;
+    line-height:1.6;
+}
+
+
+.job-item{
+    background:#222;
+    padding:8px;
+    margin:6px 0;
+    border-radius:8px;
+}
+.delete-btn{
+    background:red;
+    margin-top:5px;
+}
+
+.completed{
+    opacity:0.6;
+    text-decoration:line-through;
+    border-left:4px solid rgb(0, 0, 0);
+}
+
+/* ================= MOBILE OPTIMIZE ================= */
+@media (max-width: 768px){
+
+    .header{
+        padding:12px 15px 5px;
+    }
+
+    .header h1{
+        font-size:22px;
+    }
+
+    .header p{
+        font-size:13px;
+    }
+
+    .month-control{
+        padding:0 10px 5px;
+        font-size:14px;
+    }
+
+    .month-btn{
+        padding:5px 10px;
+        font-size:14px;
+    }
+
+    .calendar{
+        gap:4px;
+        padding:6px;
+    }
+
+    .weekday{
+        font-size:13px;
+        padding:6px 0;
+    }
+
+.day{
+    height:90px;
+    padding:4px;
+    font-size:13px;
+    border-radius:8px;
+
+    border:1px solid rgba(255,255,255,0.08);
+    transition:0.2s;
+}
+
+.day:hover{
+    border:1px solid rgba(255,255,255,0.25);
+}
+
+    .lunar{
+        font-size:9px;
+    }
+
+    .job-count{
+        font-size:9px;
+        bottom:2px;
+        right:4px;
+    }
+
+    .popup{
+        padding:15px;
+        max-height:85vh;
+    }
+
+    input{
+        padding:12px;
+        font-size:16px;   /* chuẩn mobile */
+    }
+
+    button{
+        padding:14px;
+        font-size:15px;
+    }
+
+    .bottom-nav{
+    padding:18px 0;
+    height:75px;
+    }
+
+    .nav-btn{
+    font-size:15px;
+    padding:8px 12px;
+    }
+
+}
+
+#welcomeModal{
+    display: none;
+}
+/* Ép tất cả input trong popup bằng nhau */
+.popup input{
+    width:100%;
+    height:55px;          /* 👈 ÉP CHIỀU CAO CỐ ĐỊNH */
+    padding:0 18px;
+    background:#2a2a2a;
+    border:none;
+    border-radius:12px;
+    color:white;
+    font-size:18px;
+    box-sizing:border-box;
+}
+
+/* ICON NEON */
+.info-icon{
+    position:fixed;
+    bottom:95px;
+    right:20px;
+    width:50px;
+    height:50px;
+    background:#00f0ff;
+    color:#000;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    font-size:22px;
+    cursor:pointer;
+    z-index:1000;
+    animation: glow 2s infinite alternate;
+    transition:0.3s;
+}
+
+.info-icon:hover{
+    transform:scale(1.15) rotate(10deg);
+}
+
+@keyframes glow{
+    from{
+        box-shadow:0 0 10px #00f0ff;
+    }
+    to{
+        box-shadow:0 0 25px #00f0ff, 0 0 50px #00f0ff;
+    }
+}
+.account-box{
+    text-align:center;
+}
+
+.account-avatar{
+    font-size:50px;
+    margin-bottom:10px;
+}
+
+
+
+.account-info{
+    background:#222;
+    padding:12px;
+    border-radius:10px;
+    margin-bottom:15px;
+}
+
+
+
+
+
+
+
+.account-info p{
+    margin:6px 0;
+}
+
+.modal{
+    position:fixed;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background:rgba(0,0,0,0.6);
+    backdrop-filter:blur(5px);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    animation:fadeIn 0.3s ease;
+    z-index:9999;
+}
+
+.modal-box{
+    background:#1e1e1e;
+    padding:30px;
+    border-radius:15px;
+    width:350px;
+    text-align:center;
+    color:white;
+    animation:scaleUp 0.3s ease;
+}
+
+.modal-box input{
+    width:100%;
+    padding:10px;
+    margin-top:100px;
+    border-radius:8px;
+    border:none;
+    outline:none;
+}
+.modal-content::-webkit-scrollbar {
+    display: none;
+}
+.modal-buttons{
+    margin-top:20px;
+}
+
+.modal-buttons button{
+    padding:8px 18px;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+    margin:5px;
+    background:#ff9800;
+    color:white;
+}
+
+.header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:15px 20px;
+    position:relative;
+}
+
+.header-left{
+    display:flex;
+    align-items:center;
+    gap:10px;
+}
+
+#topAvatar{
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    object-fit:cover;
+    border:2px solid gold;
+    cursor:pointer;
+}
+
+.header-right{
+    display:flex;
+    align-items:flex-end;
+}
+
+.notification-icon{
+    font-size:22px;
+    margin-top:8px; /* 👈 hạ chuông xuống */
+    cursor:pointer;
+}
+
+.modal-buttons .cancel{
+    background:#555;
+}
+
+@keyframes fadeIn{
+    from{opacity:0}
+    to{opacity:1}
+}
+
+@keyframes scaleUp{
+    from{transform:scale(0.8)}
+    to{transform:scale(1)}
+}
+.modal-content {
+    max-height: 90vh;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+}
+.account-actions button{
+    margin-top:8px;
+}
+
+.action-buttons button:hover{
+    transform:scale(1.05);
+    opacity:0.9;
+}
+
+.btn-done{
+    background:#16a34a;
+    color:white;
+}
+.btn-edit:hover{
+    transform:scale(1.03);
+}
+
+.btn-delete{
+    background: linear-gradient(135deg,#ff3b3b,#d50000);
+    color:white;
+    border:none;
+    padding:14px;
+    border-radius:12px;
+    font-size:16px;
+    font-weight:bold;
+    width:100%;
+    cursor:pointer;
+    transition:0.2s;
+}
+.time-label{
+    text-align:center;
+    color:#00ffd5;
+    font-size:12px;
+    margin-top:8px;
+    margin-bottom:4px;
+    font-weight:500;
+}
+.btn-delete:hover{
+    transform:scale(1.03);
+}
+.btn-edit{
+    background: linear-gradient(135deg,#42a5f5,#1e88e5);
     color: white;
+    border: none;
+    padding: 14px;
+    border-radius: 12px;
+    font-size:16px;
+    font-weight:bold;
+    width:100%;
+    cursor:pointer;
+    transition:0.2s;
+}
+.btn-delete{
+    background:#ef4444;
+    color:white;
 }
 
-.hero-content {
-    animation: fadeUp 1.5s ease;
+#avatarInput{
+    margin-top:18px;
+    display:block;
+    margin-left:auto;
+    margin-right:auto;
+}
+.info-icon{
+    position:fixed;
+    bottom:95px;
+    right:20px;
+    width:45px;
+    height:45px;
+    background:gold;
+    color:black;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    border-radius:50%;
+    font-size:20px;
+    cursor:pointer;
+    box-shadow:0 0 15px rgba(255,215,0,0.6);
+    transition:0.3s;
+    z-index:999;
 }
 
-.hero h1 {
-    font-size: 60px;
-    font-weight: 700;
-    background: linear-gradient(45deg, #f5d76e, #ffcc00);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    letter-spacing: 3px;
+.info-icon:hover{
+    transform:scale(1.1);
 }
 
-.hero p {
+/* Ép riêng input time để không tự giãn */
+input[type="time"]{
+    appearance:none;
+    -webkit-appearance:none;
+}
+.job-money{
+    font-size:10px;
+    color:#00ff88;
+    margin-top:2px;
+    font-weight:bold;
+}
+/* CLICK EFFECT */
+.click-effect{
+    position:absolute;
+    width:20px;
+    height:20px;
+    border-radius:50%;
+    background:rgba(0,255,255,0.6);
+    transform:scale(0);
+    animation:clickAnim 0.5s ease-out;
+    pointer-events:none;
+}
+
+@keyframes clickAnim{
+    to{
+        transform:scale(6);
+        opacity:0;
+    }
+}
+</style>
+</head>
+
+<body>
+<audio id="clickSound">
+  <source src="https://www.soundjay.com/buttons/sounds/button-3.mp3" type="audio/mpeg">
+</audio>
+<!-- Welcome Modal -->
+<div id="welcomeModal" class="modal">
+  <div class="modal-box">
+    <h2>🚀 CHÀO MỪNG ĐẾN VỚI NOTEJOB</h2>
+    <p>
+      Ứng dụng được Toàn IT tạo ra nhằm giúp các bạn ghi chú
+      một cách dễ dàng và hiệu quả.
+    </p>
+
+    <input type="text" id="nameInput" placeholder="Nhập họ tên của bạn..." />
+
+    <div class="modal-buttons">
+      <button onclick="saveName()">OK</button>
+      <button class="cancel" onclick="closeModal()">Hủy</button>
+    </div>
+  </div>
+</div>
+
+<div class="header">
+    <div class="header-left">
+        <img id="topAvatar"
+             src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+             onclick="openAccount()">
+
+        <div class="title-box">
+            <h1>NOTEJOB</h1>
+            <div id="welcomeText"></div>
+        </div>
+
+    </div>
+
+    <div class="header-right">
+        <div id="bellIcon" class="notification-icon" onclick="openNotify()">
+            🔔
+            <span id="notifyBadge"></span>
+            <div class="ring-effect"></div>
+        </div>
+    </div>
+</div>
+</div>
+<div class="info-icon" onclick="openAppInfo()">ℹ</div>
+<div class="month-control">
+<div class="month-btn" onclick="prevMonth()">⬅</div>
+<div id="monthTitle"></div>
+<div class="month-btn" onclick="nextMonth()">➡</div>
+</div>
+
+<div class="calendar" id="calendar"></div>
+
+<div class="bottom-nav">
+
+<div class="nav-btn active" onclick="setActive(this)">
+<div class="nav-icon">📅</div>
+<div class="nav-text">Lịch</div>
+</div>
+
+<div class="nav-btn" onclick="setActive(this);openSearch()">
+<div class="nav-icon">🔎</div>
+<div class="nav-text">Tìm kiếm</div>
+</div>
+
+<div class="nav-btn" onclick="setActive(this);openStats()">
+<div class="nav-icon">📊</div>
+<div class="nav-text">Thống kê</div>
+</div>
+
+<div class="nav-btn" onclick="setActive(this);openNotify()">
+<div class="nav-icon">🔔</div>
+<div class="nav-text">Thông báo</div>
+</div>
+
+<div class="nav-btn" onclick="setActive(this);openAccount()">
+<div class="nav-icon">👤</div>
+<div class="nav-text">Tài khoản</div>
+</div>
+
+</div>
+
+
+<div class="overlay" id="overlay" onclick="closeAll()"></div>
+
+<!-- ADD JOB -->
+<div class="popup" id="jobPopup">
+<h2>Quản lý ngày</h2>
+<div id="jobList"></div>
+<input type="text" id="customer" placeholder="👤 Tên khách">
+<input type="tel" id="phone" placeholder="📞 Số điện thoại">
+<input type="text" id="amount" placeholder="💰 Tổng tiền" onblur="formatInputMoney(this)">
+<input type="text" id="deposit" placeholder="💵 Tiền cọc" onblur="formatInputMoney(this)">
+<div class="time-label">⏰ Giờ bắt đầu</div>
+<input type="time" id="startTime">
+
+<div class="time-label">⏰ Giờ kết thúc</div>
+<input type="time" id="endTime">
+<input type="text" id="location" placeholder="📍Địa điểm ">
+<button onclick="saveJob()">Thêm JOB</button>
+<button class="close-btn" onclick="closeAll()">Đóng</button>
+</div>
+
+<!-- SEARCH -->
+<div class="popup" id="searchPopup">
+<h2>Tìm kiếm</h2>
+<input type="text" id="searchInput" placeholder="🔍 Nhập tên hoặc SĐT khách..." onkeyup="searchJob()">
+<div id="searchResult"></div>
+<button class="close-btn" onclick="closeAll()">Đóng</button>
+</div>
+<div id="detailBox" class="detail-modal"></div>
+<!-- STATS -->
+<div class="popup" id="statsPopup">
+  
+  <h2>Thống kê</h2>
+
+<div class="stats-header">
+    <button class="arrow-btn" onclick="prevStatsMonth()">◀</button>
+    
+    <h3 id="statsMonthTitle"></h3>
+    
+    <button class="arrow-btn" onclick="nextStatsMonth()">▶</button>
+</div>
+
+  <div id="statsResult"></div>
+<button onclick="exportExcel()">📤 Xuất Excel</button>
+  <button class="close-btn" onclick="closeAll()">Đóng</button>
+
+</div>
+<div id="welcomeText" style="text-align:center;margin-top:5px;color:#ccc"></div>
+<div class="popup" id="appInfoPopup">
+    <h2>Thông tin ứng dụng</h2>
+
+    <p><b>NOTEJOB PRO 2.0</b></p>
+    <p>🛠 Note bởi <b>Toàn IT</b></p>
+
+    <p>✨ Chúc quý khách sử dụng ứng dụng hiệu quả và thành công!</p>
+
+    <p>
+    📞 Hỗ trợ: Zalo 0397496549
+    </p>
+
+    <button class="close-btn" onclick="closeAll()">Đóng</button>
+</div>
+
+<!-- NOTIFY -->
+<!-- NOTIFY -->
+<div class="popup" id="notifyPopup">
+    <h2>Thông báo</h2>
+
+    <div id="notificationContent">
+        Không có thông báo mới 🎉
+    </div>
+
+    <button class="close-btn" onclick="closeAll()">Đóng</button>
+</div>
+<!-- ACCOUNT -->
+<div class="popup" id="accountPopup">
+
+
+<div class="account-box">
+    <div class="account-avatar">
+    <img id="accountAvatarImg"
+         src="https://cdn-icons-png.flaticon.com/512/149/149071.png"
+         style="width:90px;height:90px;border-radius:50%;object-fit:cover;border:3px solid gold;">
+    <br><br>
+    <input type="file" id="avatarInput" accept="image/*"
+       onchange="changeAvatar(event)">
+</div>
+
+    <div class="account-info">
+        <p><b>Họ tên:</b> <span id="accEmail"></span></p>
+        <p><b>Vai trò:</b> Thành Viên</p>
+        <p><b>Phiên bản:</b> NOTEJOB PRO 2.0</p>
+    </div>
+
+    <div class="account-actions">
+        <button onclick="changeName()">Đổi tên</button>
+        <button onclick="logoutAccount()" style="background:#ff4d4d;">
+            Đăng xuất
+        </button>
+    </div>
+</div>
+
+<button class="close-btn" onclick="closeAll()">Đóng</button>
+</div>
+
+
+<script src="https://cdn.jsdelivr.net/npm/xlsx/dist/xlsx.full.min.js"></script>
+
+<script>
+let jobs = JSON.parse(localStorage.getItem("jobs")) || {};
+const todayInit = new Date();
+let currentMonth = todayInit.getMonth() + 1;
+let currentYear = todayInit.getFullYear();
+let selectedDay=null;
+let editingIndex = null;
+
+let completedStats = JSON.parse(localStorage.getItem("completedStats")) || {};
+let statsMonth = currentMonth;
+let statsYear = currentYear;
+
+
+let userName = localStorage.getItem("userName") || "";
+
+document.addEventListener("DOMContentLoaded", function(){
+
+    if(userName === ""){
+        document.getElementById("welcomeModal").style.display = "flex";
+    }else{
+        document.getElementById("accEmail").innerText = userName;
+    }
+
+});
+/* ======================= SPECIAL DAYS ======================= */
+
+const specialSolarDays = {
+
+    // ===== 2026 =====
+    "2026-1-1":"🎆 Tết Dương Lịch",
+    "2026-2-14":"💖 Valentine",
+    "2026-3-8":"🌸 Quốc tế Phụ nữ",
+    "2026-3-26":"🚀 Thành lập Đoàn",
+    "2026-4-30":"🇻🇳 Giải phóng miền Nam",
+    "2026-6-1":"🧒 Quốc tế Thiếu nhi",
+    "2026-9-2":"🇻🇳 Quốc khánh",
+    "2026-5-1":"💼 Quốc tế Lao động     ✝️ Lễ Thánh Giuse",
+    "2026-12-8":"✝️ Đức Mẹ Lên Trời",
+    "2026-11-1":"✝️ Lễ Các Thánh",
+    "2026-10-20":"🌹 Phụ nữ Việt Nam",
+    "2026-11-20":"📚 Nhà giáo Việt Nam",
+    "2026-12-24":"🎄 Vọng Giáng Sinh",
+    "2026-12-25":"🎄 Giáng Sinh",
+    "2026-12-31":"🎉 Giao thừa DL",
+    "2026-3-25":"✝️ Lễ Truyền Tin",
+"2026-6-24":"✝️ Sinh nhật Thánh Gioan Tẩy Giả",
+"2026-6-29":"✝️ Thánh Phêrô & Phaolô",
+"2026-11-21":"✝️ Đức Mẹ Dâng Mình",
+"2026-2-14":"💖 Valentine",
+"2027-2-14":"💖 Valentine",
+    // ===== 2027 =====
+    "2027-1-1":"🎆 Tết Dương Lịch",
+    "2027-2-14":"💖 Valentine",
+    "2027-3-8":"🌸 Quốc tế Phụ nữ",
+    "2027-3-26":"🚀 Thành lập Đoàn",
+    "2027-4-30":"🇻🇳 Giải phóng miền Nam",
+    "2027-5-1":"💼 Quốc tế Lao động",
+    "2027-6-1":"🧒 Quốc tế Thiếu nhi",
+    "2027-9-2":"🇻🇳 Quốc khánh",
+    "2027-5-1":"✝️ Lễ Thánh Giuse",
+    "2027-12-8":"✝️ Đức Mẹ Lên Trời",
+    "2027-11-1":"✝️ Lễ Các Thánh",
+    "2027-10-20":"🌹 Phụ nữ Việt Nam",
+    "2027-11-20":"📚 Nhà giáo Việt Nam",
+    "2027-12-24":"🎄 Vọng Giáng Sinh",
+    "2027-12-25":"🎄 Giáng Sinh",
+    "2027-12-31":"🎉 Giao thừa DL"
+};
+
+// ÂM LỊCH QUAN TRỌNG (dựa theo lunarSimple của bạn)
+const specialLunarDays = {
+
+    // ===== TẾT =====
+    "1/1":"🧧 Tết Nguyên Đán",
+    "2/1":"🎊 Mùng 2 Tết",
+    "3/1":"🎊 Mùng 3 Tết",
+    "15/1":"🌕 Rằm Tháng Giêng",
+
+    // ===== TRUYỀN THỐNG =====
+    "10/3":"🏯 Giỗ Tổ Hùng Vương",
+    "15/4":"🙏 Phật Đản",
+    "5/5":"🍃 Tết Đoan Ngọ",
+    "15/7":"🕯 Vu Lan",
+    "15/8":"🥮 Trung Thu",
+    "23/12":"🧹 Ông Táo",
+
+    // ===== CÔNG GIÁO =====
+    "2/11":"✝️ Lễ Các Đẳng",
+    "8/12":"✝️ Đức Mẹ Vô Nhiễm"
+};
+/* ======================= CALENDAR ======================= */
+
+function daysInMonth(m,y){return new Date(y,m,0).getDate();}
+window.onload = function(){
+
+    if(!userName){
+        document.getElementById("welcomeModal").style.display = "flex";
+    }else{
+        document.getElementById("accEmail").innerText = userName;
+        showWelcome();
+    }
+loadAvatar();
+    generateCalendar();
+    checkNotifications();
+}
+
+function saveName(){
+
+    let name = document.getElementById("nameInput").value.trim();
+
+    if(name === ""){
+        alert("Vui lòng nhập họ tên");
+        return;
+    }
+
+    localStorage.setItem("userName", name);
+
+    userName = name;
+
+    document.getElementById("accEmail").innerText = name;
+    document.getElementById("welcomeText").innerText = "Chào " + name + " 👋";
+
+    document.getElementById("welcomeModal").style.display = "none";
+}
+function closeModal(){
+    document.getElementById("welcomeModal").style.display = "none";
+}
+
+function showWelcome(){
+
+    const hour = new Date().getHours();
+    let greeting = "";
+
+    if(hour < 12){
+        greeting = "Chào buổi sáng";
+    }else if(hour < 18){
+        greeting = "Chào buổi chiều";
+    }else{
+        greeting = "Chào buổi tối";
+    }
+
+document.getElementById("welcomeText").innerHTML =
+    greeting + " " + userName + "<br>Chúc bạn một ngày hiệu quả 🚀";
+    showTodayTaskCount();
+}
+function openAppInfo(){
+    showPopup("appInfoPopup");
+}
+
+
+// LOAD AVATAR KHI MỞ WEB
+function loadAvatar(){
+    const savedAvatar = localStorage.getItem("avatar");
+
+    if(savedAvatar){
+        document.getElementById("accountAvatarImg").src = savedAvatar;
+        document.getElementById("topAvatar").src = savedAvatar;
+    }
+}
+function markCompleted(dateKey,index){
+
+    let job = jobs[dateKey][index];
+
+    let monthKey = job.day.substring(0,7);
+
+    if(!completedStats[monthKey]){
+        completedStats[monthKey] = {
+            totalJobs:0,
+            totalMoney:0,
+            jobs:[]
+        };
+    }
+
+    // thêm vào thống kê
+    completedStats[monthKey].jobs.push(job);
+    completedStats[monthKey].totalJobs++;
+    completedStats[monthKey].totalMoney += job.amount;
+
+    // ❗ XOÁ KHỎI LỊCH
+    jobs[dateKey].splice(index,1);
+
+    // nếu ngày không còn job thì xoá luôn
+    if(jobs[dateKey].length === 0){
+        delete jobs[dateKey];
+    }
+
+    saveData();
+
+    generateCalendar();
+}
+document.addEventListener("DOMContentLoaded", loadAvatar);
+// ĐỔI ẢNH
+function changeAvatar(event){
+    const file = event.target.files[0];
+    if(!file) return;
+
+    const reader = new FileReader();
+
+    reader.onload = function(e){
+        const imageData = e.target.result;
+
+        document.getElementById("accountAvatarImg").src = imageData;
+        document.getElementById("topAvatar").src = imageData;
+
+        localStorage.setItem("avatar", imageData);
+    };
+
+    reader.readAsDataURL(file);
+}
+
+
+function showTodayTaskCount(){
+
+    let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+
+    const today = new Date().toISOString().split("T")[0];
+
+    let todayTasks = tasks.filter(task => task.date === today);
+
+    if(todayTasks.length > 0){
+        alert("📌 Hôm nay bạn có " + todayTasks.length + " công việc cần làm!");
+    }
+}
+
+function getLunarSimple(day, month, year){
+    const lunar = new Intl.DateTimeFormat(
+        'vi-u-ca-chinese',
+        { day:'numeric', month:'numeric' }
+    ).format(new Date(year, month-1, day));
+
+    return lunar;
+}
+function generateCalendar(){
+    const cal=document.getElementById("calendar");
+    cal.innerHTML="";
+
+    document.getElementById("monthTitle").innerText=
+        "THÁNG "+currentMonth+" - "+currentYear;
+
+    const weekdays=["Th2","Th3","Th4","Th5","Th6","Th7","CN"];
+
+    weekdays.forEach((day,i)=>{
+        const w=document.createElement("div");
+        w.className="weekday";
+        if(i>=5) w.classList.add("weekend-title");
+        w.innerText=day;
+        cal.appendChild(w);
+    });
+
+    let firstDay=new Date(currentYear,currentMonth-1,1).getDay();
+    firstDay = (firstDay === 0) ? 6 : firstDay - 1;
+
+    let total=daysInMonth(currentMonth,currentYear);
+
+    for(let i=0;i<firstDay;i++){
+        cal.appendChild(document.createElement("div"));
+    }
+
+    for(let i=1;i<=total;i++){
+        let key=currentYear+"-"+currentMonth+"-"+i;
+        const d=document.createElement("div");
+        d.className="day";
+// ===== TÔ NGÀY HÔM NAY =====
+const today = new Date();
+
+if(
+    i === today.getDate() &&
+    currentMonth === (today.getMonth() + 1) &&
+    currentYear === today.getFullYear()
+){
+    d.classList.add("today");
+}
+        let solarKey = currentYear+"-"+currentMonth+"-"+i;
+let lunar = getLunarSimple(i,currentMonth,currentYear);
+
+let specialText = "";
+
+if(specialSolarDays[solarKey]){
+    specialText = specialSolarDays[solarKey];
+}
+
+if(specialLunarDays[lunar]){
+    specialText = specialLunarDays[lunar];
+}
+
+d.innerHTML = `
+    <div class="day-number">${i}</div>
+    <div class="lunar">${lunar}</div>
+    ${specialText ? `<div class="special-day">${specialText}</div>` : ""}
+`;
+
+        let dayOfWeek=new Date(currentYear,currentMonth-1,i).getDay();
+        if(dayOfWeek===0 || dayOfWeek===6){
+            d.classList.add("weekend");
+        }
+
+        if(jobs[key]){
+    d.classList.add("hasJob");
+
+    d.innerHTML += `<div class='job-count'>${jobs[key].length} job</div>`;
+
+    // HIỂN THỊ TÊN JOB
+    jobs[key].slice(0,2).forEach(job=>{
+        d.innerHTML += `<div class="job-preview">${job.name}</div>`;
+    });
+
+    // TÍNH TỔNG TIỀN
+    let totalMoney = 0;
+    jobs[key].forEach(job=>{
+        totalMoney += job.amount;
+    });
+
+    d.innerHTML += `<div class="job-money">${formatMoney(totalMoney)}</div>`;
+}
+
+        d.onclick=()=>openDay(key);
+        cal.appendChild(d);
+    }
+}
+
+function prevMonth(){
+    currentMonth--;
+    if(currentMonth<1){currentMonth=12;currentYear--;}
+    generateCalendar();
+}
+
+function nextMonth(){
+    currentMonth++;
+    if(currentMonth>12){currentMonth=1;currentYear++;}
+    generateCalendar();
+}
+
+/* ======================= JOB ======================= */
+
+function openDay(key){
+    selectedDay=key;
+    showPopup("jobPopup");
+    renderJobs();
+}
+
+
+function renderJobs(){
+    let list=document.getElementById("jobList");
+    list.innerHTML="";
+
+    if(!jobs[selectedDay]) return;
+
+    jobs[selectedDay].forEach((job,index)=>{
+        list.innerHTML+=`
+        <div class="job-item ${job.completed ? 'completed' : ''}">
+            <b>${job.name}</b><br>
+            📞 ${job.phone}<br>
+            🕒 ${job.startTime} - ${job.endTime}<br>
+            📍 ${job.location}<br>
+            💰 ${formatMoney(job.amount)} (Cọc ${formatMoney(job.deposit)})
+
+<div class="action-buttons">
+    <button class="btn-done" onclick="completeJob(${index})">Đã hoàn thành</button>
+    <button class="btn-edit" onclick="editJob(${index})">Sửa</button>
+    <button class="btn-delete" onclick="deleteJob(${index})">Xoá</button>
+</div>
+        </div>`;
+    });
+}
+
+function logoutAccount(){
+
+    if(confirm("Bạn có chắc muốn đăng xuất?")){
+
+        // Chỉ xoá dữ liệu công việc
+        localStorage.removeItem("jobs");
+        localStorage.removeItem("completedStats");
+    // xóa tên người dùng
+    localStorage.removeItem("userName");
+
+    // xóa avatar nếu muốn
+    localStorage.removeItem("userAvatar");
+        // KHÔNG xoá avatar
+        // KHÔNG xoá userName
+
+        alert("Đã đăng xuất!");
+        location.reload();
+    }
+}
+function changeName(){
+
+    const newName = prompt(
+        "👋 Xin chào!\n\n" +
+        "Ứng dụng được Toàn IT tạo ra nhằm giúp bạn ghi chú công việc dễ dàng.\n\n" +
+        "👉 Nhập HỌ TÊN mới:"
+    );
+
+    if(newName && newName.trim() !== ""){
+
+        userName = newName.trim();
+        localStorage.setItem("userName", userName);
+
+        document.getElementById("accEmail").innerText = userName;
+
+        showWelcome();
+
+        alert("✅ Đổi tên thành công!");
+    }
+}
+function editJob(index){
+    const job = jobs[selectedDay][index];
+
+    // lưu lại index đang sửa
+    editingIndex = index;
+
+    // đổ dữ liệu lên form
+    document.getElementById("customer").value = job.name;
+    document.getElementById("phone").value = job.phone;
+    document.getElementById("amount").value = job.amount.toLocaleString();
+    document.getElementById("deposit").value = job.deposit.toLocaleString();
+    document.getElementById("startTime").value = job.startTime;
+    document.getElementById("endTime").value = job.endTime;
+    document.getElementById("location").value = job.location;
+
+    // đổi chữ nút
+    document.querySelector("#jobPopup button").innerText = "Cập nhật JOB";
+}
+
+function saveJob(){
+    const name=document.getElementById("customer").value.trim();
+    const phone=document.getElementById("phone").value.trim();
+const amountInput = document.getElementById("amount").value.trim();
+const depositInput = document.getElementById("deposit").value.trim();
+
+if(amountInput === "" || depositInput === ""){
+    alert("Vui lòng nhập tiền!");
+    return;
+}
+
+const amount = parseInt(amountInput.replace(/,/g,'')) || 0;
+const deposit = parseInt(depositInput.replace(/,/g,'')) || 0;
+    const startTime=document.getElementById("startTime").value;
+    const endTime=document.getElementById("endTime").value;
+    const location=document.getElementById("location").value.trim();
+
+if(!name || !phone || !startTime || !endTime || !location){
+    alert("Vui lòng nhập đầy đủ thông tin!");
+    return;
+}
+
+    if(startTime >= endTime){
+        alert("Giờ kết thúc phải lớn hơn giờ bắt đầu!");
+        return;
+    }
+
+if(editingIndex !== null){
+    // đang sửa
+jobs[selectedDay][editingIndex] = {
+    ...jobs[selectedDay][editingIndex], // giữ lại completed
+    name, phone, amount, deposit,
+    startTime, endTime, location
+};
+    editingIndex = null;
+    document.querySelector("#jobPopup button").innerText = "Thêm JOB";
+}else{
+    if(!jobs[selectedDay]) jobs[selectedDay]=[];
+
+    jobs[selectedDay].push({
+        name, phone, amount, deposit,
+        startTime, endTime, location
+    });
+}
+
+    localStorage.setItem("jobs",JSON.stringify(jobs));
+
+    document.querySelectorAll("#jobPopup input").forEach(i=>i.value="");
+renderJobs();
+
+
+generateCalendar();
+checkNotifications();
+alert("✅ Note lịch thành công!");
+}
+
+function deleteJob(index){
+
+    const job = jobs[selectedDay][index];
+
+    if(!confirm("Xác nhận xoá job này?")) return;
+
+    // Nếu job đã hoàn thành → trừ thống kê
+    if(job.completed){
+
+        const parts = selectedDay.split("-");
+        const monthKey = parts[0] + "-" + parts[1];
+
+        if(completedStats[monthKey]){
+            completedStats[monthKey].totalJobs -= 1;
+            completedStats[monthKey].totalMoney -= job.amount;
+
+            // tránh âm số
+            if(completedStats[monthKey].totalJobs < 0){
+                completedStats[monthKey].totalJobs = 0;
+            }
+            if(completedStats[monthKey].totalMoney < 0){
+                completedStats[monthKey].totalMoney = 0;
+            }
+        }
+
+        localStorage.setItem("completedStats",JSON.stringify(completedStats));
+    }
+
+    // Xoá job khỏi ngày
+    jobs[selectedDay].splice(index,1);
+
+    if(jobs[selectedDay].length === 0){
+        delete jobs[selectedDay];
+    }
+
+    localStorage.setItem("jobs",JSON.stringify(jobs));
+
+    renderJobs();
+    checkNotifications();
+    generateCalendar();
+}
+
+/* ======================= COMPLETE JOB (FIX LỖI THÁNG) ======================= */
+function completeJob(index){
+
+    if(!confirm("Xác nhận đã hoàn thành job này?")) return;
+
+    const job = jobs[selectedDay][index];
+
+    if(job.completed){
+        alert("Job này đã hoàn thành rồi.");
+        return;
+    }
+
+    const parts = selectedDay.split("-");
+    const monthKey = parts[0] + "-" + parts[1];
+
+    if(!completedStats[monthKey]){
+        completedStats[monthKey] = {
+            totalJobs:0,
+            totalMoney:0,
+            jobs:[]
+        };
+    }
+
+    job.completed = true;
+
+    // ❗ kiểm tra nếu job đã tồn tại
+    const exists = completedStats[monthKey].jobs.find(
+        j => j.name === job.name && j.phone === job.phone && j.day === selectedDay
+    );
+
+    if(!exists){
+
+        completedStats[monthKey].totalJobs += 1;
+        completedStats[monthKey].totalMoney += job.amount;
+
+        completedStats[monthKey].jobs.push({
+            ...job,
+            day:selectedDay
+        });
+
+    }
+
+    localStorage.setItem("completedStats",JSON.stringify(completedStats));
+    localStorage.setItem("jobs",JSON.stringify(jobs));
+
+    checkNotifications();
+    renderJobs();
+    generateCalendar();
+
+    alert("✅ Đã đánh dấu hoàn thành!");
+}
+/* ======================= STATS ======================= */
+
+function openStats(){
+    statsMonth = currentMonth;
+    statsYear = currentYear;
+    renderStats();
+    showPopup("statsPopup");
+}
+
+function renderStats(){
+    const monthKey = statsYear + "-" + statsMonth;
+    const data = completedStats[monthKey] || { totalJobs:0, totalMoney:0 };
+document.getElementById("statsMonthTitle").innerText =
+    "THÁNG " + statsMonth + " - " + statsYear;
+document.getElementById("statsResult").innerHTML = `
+    <p>Tổng JOB đã hoàn thành: ${data.totalJobs}</p>
+    <p>Tổng số tiền: ${formatMoney(data.totalMoney)}</p>
+
+    <button onclick="viewCompletedDetails('${monthKey}')"
+        style="background:gold;color:black;">
+        Xem chi tiết
+    </button>
+`;
+}
+
+function prevStatsMonth(){
+    statsMonth--;
+    if(statsMonth<1){statsMonth=12;statsYear--;}
+    renderStats();
+}
+
+function nextStatsMonth(){
+    statsMonth++;
+    if(statsMonth>12){statsMonth=1;statsYear++;}
+    renderStats();
+}
+
+
+/* ======================= SEARCH & UI ======================= */
+function updateBellCount(){
+    let notifications = JSON.parse(localStorage.getItem("notifications")) || [];
+    const bell = document.getElementById("bellCount");
+
+    if(notifications.length > 0){
+        bell.innerText = notifications.length;
+        bell.style.display = "block";
+    }else{
+        bell.style.display = "none";
+    }
+}
+function openSearch(){showPopup("searchPopup")}
+
+function searchJob(){
+
+    const key = document.getElementById("searchInput").value.toLowerCase();
+    const result = document.getElementById("searchResult");
+    result.innerHTML = "";
+
+    for(let d in jobs){
+
+        jobs[d].forEach((job,index)=>{
+
+            const name = job.name.toLowerCase();
+            const phone = job.phone.toLowerCase();
+
+            // TÌM TÊN HOẶC SĐT
+            if(name.includes(key) || phone.includes(key)){
+
+                result.innerHTML += `
+                    <div class="search-item"
+                         onclick="showJobDetail('${d}', ${index})">
+                         
+                        <span class="search-text">
+                            ${d} - ${job.name} - ${job.phone}
+                        </span>
+
+                        <span class="view-btn">XEM</span>
+
+                    </div>
+                `;
+            }
+
+        });
+
+    }
+
+}
+
+function openNotify(){showPopup("notifyPopup")}
+function openAccount(){showPopup("accountPopup")}
+
+function showPopup(id){
+    document.body.classList.add("blur");
+    document.getElementById(id).classList.add("show");
+}
+
+function closeAll(){
+    document.body.classList.remove("blur");
+    document.querySelectorAll(".popup").forEach(p=>{
+        p.classList.remove("show");
+    });
+}
+
+function setActive(el){
+    document.querySelectorAll(".nav-btn").forEach(btn=>btn.classList.remove("active"));
+    el.classList.add("active");
+}
+
+function checkNotifications(){
+
+    const today = new Date();
+    const tomorrow = new Date();
+    tomorrow.setDate(today.getDate() + 1);
+
+    const todayKey = today.getFullYear()+"-"+(today.getMonth()+1)+"-"+today.getDate();
+    const tomorrowKey = tomorrow.getFullYear()+"-"+(tomorrow.getMonth()+1)+"-"+tomorrow.getDate();
+
+    let html = "";
+
+    // ===== HÔM NAY =====
+    if(jobs[todayKey]){
+        html += `<div style="margin-bottom:20px;">
+                    <div style="color:#00ffcc;font-weight:bold;">
+                        📅 HÔM NAY (${jobs[todayKey].length} lịch)
+                    </div><br>`;
+
+        jobs[todayKey].forEach(job=>{
+            html += `
+                <div style="margin-bottom:8px;padding:8px;background:#111;border-radius:6px;">
+                    👤 ${job.name}<br>
+                    📞 ${job.phone}<br>
+                    📍 ${job.location}<br>
+                    💰 ${formatMoney(job.amount)}
+                </div>
+            `;
+        });
+
+        html += `</div>`;
+    }
+
+    // ===== NGÀY MAI =====
+    if(jobs[tomorrowKey]){
+        html += `<div style="margin-bottom:10px;">
+                    <div style="color:#ffaa00;font-weight:bold;">
+                        ⏰ NGÀY MAI (${jobs[tomorrowKey].length} lịch)
+                    </div><br>`;
+
+        jobs[tomorrowKey].forEach(job=>{
+            html += `
+                <div style="margin-bottom:8px;padding:8px;background:#111;border-radius:6px;">
+                    👤 ${job.name}<br>
+                    📞 ${job.phone}<br>
+                    📍 ${job.location}<br>
+                    💰 ${formatMoney(job.amount)}
+                </div>
+            `;
+        });
+
+        html += `</div>`;
+    }
+
+    // ===== KHÔNG CÓ GÌ =====
+    if(!jobs[todayKey] && !jobs[tomorrowKey]){
+        html = "Không có thông báo mới 🎉";
+    }
+let count = 0;
+
+function closeDetail(){
+    document.getElementById("detailBox").style.display = "none";
+}
+
+if(jobs[todayKey]){
+    jobs[todayKey].forEach(job=>{
+        if(!job.completed) count++;
+    });
+}
+
+if(jobs[tomorrowKey]){
+    jobs[tomorrowKey].forEach(job=>{
+        if(!job.completed) count++;
+    });
+}
+const badge = document.getElementById("notifyBadge");
+const bell = document.getElementById("bellIcon");
+
+if(count > 0){
+    badge.style.display = "inline-block";
+    badge.innerText = count;
+
+    // 👉 THÊM HIỆU ỨNG
+    bell.classList.add("bell-shake");
+    bell.classList.add("bell-active");
+
+}else{
+    badge.style.display = "none";
+
+    // 👉 XÓA HIỆU ỨNG
+    bell.classList.remove("bell-shake");
+    bell.classList.remove("bell-active");
+}
+
+document.getElementById("notificationContent").innerHTML = html;
+}
+
+function showJobDetail(dayKey, index){
+
+    const job = jobs[dayKey][index];
+
+    alert(
+        "📅 " + dayKey + "\n\n" +
+        "👤 " + job.name + "\n" +
+        "📞 " + job.phone + "\n" +
+        "⏰ " + job.startTime + " - " + job.endTime + "\n" +
+        "📍 " + job.location + "\n" +
+        "💰 " + formatMoney(job.amount) +
+        " (Cọc " + formatMoney(job.deposit) + ")"
+    );
+
+// 👉 ĐÓNG SEARCH
+closeAll();
+
+// 👉 RESET NAV
+document.querySelectorAll(".nav-btn")
+    .forEach(btn => btn.classList.remove("active"));
+
+// 👉 ACTIVE LẠI LỊCH
+document.querySelector('[data-tab="lich"]')
+    .classList.add("active");
+}
+
+function formatInputMoney(input){
+    let value = input.value.replace(/,/g,'').replace(/\D/g,'');
+    if(value===""){input.value="";return;}
+    input.value = Number(value).toLocaleString("en-US");
+}
+
+function formatMoney(n){return n.toLocaleString();}
+function viewCompletedDetails(monthKey){
+
+    const data = completedStats[monthKey];
+
+    if(!data || data.totalJobs === 0){
+        alert("Không có job hoàn thành.");
+        return;
+    }
+
+    if(!data.jobs || data.jobs.length === 0){
+        alert("Không có dữ liệu chi tiết (job cũ).");
+        return;
+    }
+
+    let html = "<h3 style='color:gold'>JOB đã hoàn thành</h3>";
+
+    data.jobs.forEach((job,i)=>{
+        html += `
+        <div style="
+            margin-bottom:10px;
+            padding:10px;
+            border-radius:8px;
+            background:#222;
+        ">
+            <b>${job.name}</b><br>
+            📅 ${job.day}<br>
+            📞 ${job.phone}<br>
+            💰 ${formatMoney(job.amount)}<br><br>
+
+            <button onclick="editCompleted('${monthKey}',${i})" class="btn-edit">
+    Sửa
+</button>
+
+<button onclick="deleteCompleted('${monthKey}',${i})" class="btn-delete">
+    Xoá
+</button>
+        </div>
+        `;
+    });
+
+    document.getElementById("statsResult").innerHTML = html;
+}
+
+function deleteCompleted(monthKey,index){
+
+    if(!confirm("Xoá job hoàn thành này?")) return;
+
+    const job = completedStats[monthKey].jobs[index];
+
+    completedStats[monthKey].totalJobs -= 1;
+    completedStats[monthKey].totalMoney -= job.amount;
+
+    completedStats[monthKey].jobs.splice(index,1);
+
+    if(completedStats[monthKey].jobs.length === 0){
+        delete completedStats[monthKey];
+    }
+
+    localStorage.setItem("completedStats",JSON.stringify(completedStats));
+
+    renderStats();
+}
+
+document.addEventListener("click", function(e){
+
+    const circle = document.createElement("div");
+    circle.className = "click-effect";
+
+    circle.style.left = e.pageX + "px";
+    circle.style.top = e.pageY + "px";
+
+    document.body.appendChild(circle);
+
+    setTimeout(()=>{
+        circle.remove();
+    },500);
+
+});
+function exportExcel(){
+
+    let data=[];
+    let totalMoney=0;
+    let totalJob=0;
+
+    for(let date in jobs){
+
+        let parts=date.split("-");
+        let y=parseInt(parts[0]);
+        let m=parseInt(parts[1]);
+
+        if(y===currentYear && m===currentMonth){
+
+            jobs[date].forEach(job=>{
+
+                data.push({
+                    "Ngày":date,
+                    "Tên khách":job.name || "",
+                    "SĐT":job.phone || "",
+                    "Địa điểm":job.location || "",
+                    "Giờ bắt đầu":job.startTime || "",
+                    "Giờ kết thúc":job.endTime || "",
+                    "Tổng tiền":job.amount || "",
+                    "Tiền cọc":job.deposit || ""
+                });
+
+                totalMoney+=Number(job.amount)||0;
+                totalJob++;
+
+            });
+
+        }
+
+    }
+
+    if(data.length===0){
+        alert("Không có JOB trong tháng này!");
+        return;
+    }
+
+    data.push({});
+    data.push({"Ngày":"TỔNG JOB","Tên khách":totalJob});
+    data.push({"Ngày":"TỔNG TIỀN","Tên khách":totalMoney});
+
+    const ws=XLSX.utils.json_to_sheet(data);
+    const wb=XLSX.utils.book_new();
+
+    XLSX.utils.book_append_sheet(wb,ws,"NOTEJOB");
+
+    XLSX.writeFile(wb,"ThongKe_NOTEJOB.xlsx");
+}
+generateCalendar();
+checkNotifications();
+</script>
+</body>
+</html>.hero p {
     margin-top: 15px;
     font-size: 20px;
     opacity: 0.85;
